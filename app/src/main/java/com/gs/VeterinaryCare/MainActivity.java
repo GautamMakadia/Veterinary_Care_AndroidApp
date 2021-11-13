@@ -2,6 +2,7 @@ package com.gs.VeterinaryCare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -31,7 +33,6 @@ import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     TextView signInButton;
-    TextView signOutButton;
     ShapeableImageView profilePicture;
     boolean isUsrLoggedIn = false;
 
@@ -70,14 +71,25 @@ public class MainActivity extends AppCompatActivity {
             //On Click Sign In Button
             //Launch Google Account Lists
             signInButton = findViewById(R.id.sign_in_item);
-            signOutButton = findViewById(R.id.sign_out_item);
             signInButton.setOnClickListener(view -> {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 activityResultLauncher.launch(signInIntent);
             });
+
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
 
     //Following Code For Google SignIn.
     @Override // CHECKS FOR LAST SIGNED ACCOUNT
@@ -99,13 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(GoogleSignInAccount account) {
         if (account == null) {
-            try {
-                MenuItem soutitem = (MenuItem) signOutButton;
-                soutitem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-            } catch (Exception e){
-                Toast.makeText(this, " SignOut Not Removed", Toast.LENGTH_SHORT).show();
-            }
-
+            Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUsrLoggedIn = true;
             profilePicture = findViewById(R.id.rounded_usr_profile);
@@ -122,4 +128,5 @@ public class MainActivity extends AppCompatActivity {
             profilePicture.setVisibility(View.VISIBLE);
         }
     }
+
 }

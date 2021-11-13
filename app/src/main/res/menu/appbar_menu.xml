@@ -15,11 +15,4 @@
         android:id="@+id/settings"
         android:title="Settings"
         />
-
-    <item
-        android:id="@+id/sign_out_item"
-        android:title="Sign Out"
-        app:showAsAction="always"
-        />
-
 </menu>
