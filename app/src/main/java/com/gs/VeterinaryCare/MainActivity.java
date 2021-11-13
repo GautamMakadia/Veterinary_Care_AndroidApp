@@ -2,6 +2,7 @@ package com.gs.VeterinaryCare;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +31,8 @@ import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     TextView signInButton;
+    TextView signOutButton;
     ShapeableImageView profilePicture;
-
     boolean isUsrLoggedIn = false;
 
 
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             //On Click Sign In Button
             //Launch Google Account Lists
             signInButton = findViewById(R.id.sign_in_item);
+            signOutButton = findViewById(R.id.sign_out_item);
             signInButton.setOnClickListener(view -> {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 activityResultLauncher.launch(signInIntent);
@@ -76,14 +78,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     //Following Code For Google SignIn.
-    @Override
+    @Override // CHECKS FOR LAST SIGNED ACCOUNT
     protected void onStart() {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
+    //HANDLE THE SIGNIN PROCESS
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -94,17 +98,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        if (account == null) { // IF USE NOT SIGNED IN.
-            Toast.makeText(this, "Not Logged In", Toast.LENGTH_SHORT).show();
+        if (account == null) {
+            try {
+                MenuItem soutitem = (MenuItem) signOutButton;
+                soutitem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            } catch (Exception e){
+                Toast.makeText(this, " SignOut Not Removed", Toast.LENGTH_SHORT).show();
+            }
+
         } else {
             isUsrLoggedIn = true;
             profilePicture = findViewById(R.id.rounded_usr_profile);
+
             User usr = new User(
                     account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
                     account.getPhotoUrl());
+
             signInButton.setVisibility(View.GONE);
+
             Glide.with(this).load(usr.getUsrImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
         }
