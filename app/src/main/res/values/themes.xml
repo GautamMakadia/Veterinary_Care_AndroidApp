@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.VeterinaryCare" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.VeterinaryCare" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -13,22 +13,4 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="Theme.VeterinaryCare.NoActionBar">
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-    </style>
-
-    <style name="Theme.VeterinaryCare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.VeterinaryCare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="RoundedImageView">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <!-- values-v29/themes.xml -->
-
-    <style name="Theme">Theme</style>
 </resources>

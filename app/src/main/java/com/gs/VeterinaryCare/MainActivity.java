@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -32,8 +33,8 @@ import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView signInButton;
     ShapeableImageView profilePicture;
+    TextView signInButton;
     boolean isUsrLoggedIn = false;
 
 
@@ -47,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
+        Toolbar mToolbar = binding.topAppToolBar;
+        setSupportActionBar(mToolbar);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+
         FloatingActionButton fab = binding.fab;
 
         fab.setOnClickListener(view -> {
@@ -79,27 +83,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.appbar_menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+
+            case (int)R.id.settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case (int) R.id.sign_out_item:
+                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:    return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     //Following Code For Google SignIn.
-    @Override // CHECKS FOR LAST SIGNED ACCOUNT
+   // @Override // CHECKS FOR LAST SIGNED ACCOUNT
     protected void onStart() {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
-    //HANDLE THE SIGNIN PROCESS
+    //HANDLE THE SIGN_IN PROCESS
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
@@ -122,11 +143,11 @@ public class MainActivity extends AppCompatActivity {
                     account.getId(),
                     account.getPhotoUrl());
 
-            signInButton.setVisibility(View.GONE);
-
             Glide.with(this).load(usr.getUsrImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
         }
+
+        invalidateOptionsMenu();
     }
 
 }

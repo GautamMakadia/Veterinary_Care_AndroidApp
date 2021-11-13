@@ -10,29 +10,25 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.VeterinaryCare.AppBarOverlay">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/topAppToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name"
             app:menu="@menu/appbar_menu"
-            app:popupTheme="@style/Theme.MaterialComponents.DayNight"
+            app:title="@string/app_name"
             >
-
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/rounded_usr_profile"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:visibility="visible"
                 android:src="@drawable/ic_baseline_account_circle_24"
-                android:layout_gravity="end"
-                android:visibility="gone"
-                android:clickable="true"
-                android:focusable="true"
-                android:theme="@style/RoundedImageView"/>
+                android:layout_gravity="end"/>
 
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
