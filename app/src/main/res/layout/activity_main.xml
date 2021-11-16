@@ -10,31 +10,31 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+        android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppToolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/appbar_menu"
-            app:title="@string/app_name"
-            >
+            app:title="@string/app_name">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/rounded_usr_profile"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:visibility="visible"
+                android:visibility="gone"
+                android:layout_gravity="end"
                 android:src="@drawable/ic_baseline_account_circle_24"
-                android:layout_gravity="end"/>
+                />
 
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="SpeakableTextPresentCheck" />
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
