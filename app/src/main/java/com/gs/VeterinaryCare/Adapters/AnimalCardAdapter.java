@@ -10,13 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.cardview.widget.CardView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
 import com.gs.VeterinaryCare.R;
 import com.gs.VeterinaryCare.WebViewActivity.WebViewActivity;
+
 
 import java.util.ArrayList;
 
@@ -35,13 +37,13 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
     @NonNull
     @Override
     public animalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View animalCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.info_card,parent,false);
+        View animalCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
         return new animalViewHolder(animalCardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull animalViewHolder holder, int position) {
-        final AnimalsData temp = animalsDataArrayList.get(position);
+        final AnimalsData atCardPosition = animalsDataArrayList.get(position);
 
         holder.animalImage.setImageResource(animalsDataArrayList.get(position).getImageOfAnimal());
         holder.animalName.setText(animalsDataArrayList.get(position).getAnimalName());
@@ -50,9 +52,8 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
             Toast.makeText(view.getContext(), "Loading URL...",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, WebViewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("PageURL",temp.getAnimalPageURL());
+            intent.putExtra("PageURL",atCardPosition.getAnimalPageURL());
             context.startActivity(intent);
-
         });
     }
 
@@ -68,7 +69,7 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
 
         public ImageView animalImage;
         public TextView animalName;
-        public ConstraintLayout parentLayout;
+        public CardView parentLayout;
 
 
         public animalViewHolder(@NonNull View itemView) {
@@ -76,7 +77,7 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
 
             animalImage = itemView.findViewById(R.id.animalImageView);
             animalName = itemView.findViewById(R.id.animalNameTextView);
-            parentLayout = itemView.findViewById(R.id.carViewHolder);
+            parentLayout = itemView.findViewById(R.id.cardViewHolder);
         }
     }
 }
