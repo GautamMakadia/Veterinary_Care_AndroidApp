@@ -53,8 +53,8 @@
         <item name="backgroundColor" tools:targetapi="31">@color/material_dynamic_primary10</item>
     </style>
 
-        <style name="Theme.DynamicColorFragment" parent="Theme.Material3.DynamicColors.DayNight">
-                <item name="android:background">@color/material_dynamic_neutral10</item>
-        </style>
+    <style name="Theme.DynamicColorFragment" parent="Theme.Material3.DynamicColors.DayNight">
+         <item name="android:background">@color/material_dynamic_neutral10</item>
+    </style>
 
 </resources>

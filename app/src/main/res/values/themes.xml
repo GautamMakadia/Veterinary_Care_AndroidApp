@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" >
     <!-- Base application theme. -->
     <style name="Theme.VeterinaryCare" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -48,16 +48,20 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
 
-        <!-- FOR API LEVEL 31 -->
+        <!-- FOR SYSTEM BAR THEMING -->
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="31">true</item>
-        <item name="android:navigationBarColor" tools:targetApi="31">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.DynamicColorFragment" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="android:background">@color/material_dynamic_neutral99</item>
     </style>
 
-    <style name="roundedImageVIew" />
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 
 </resources>

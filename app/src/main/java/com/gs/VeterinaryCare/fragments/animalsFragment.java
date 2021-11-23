@@ -3,8 +3,6 @@ package com.gs.VeterinaryCare.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -56,7 +54,7 @@ public class animalsFragment extends Fragment {
         AnimalsData ad6 = new AnimalsData(R.drawable.tiger,"Tiger", "https://veterinarycare-eb421.web.app/Animals_Catagory/Animals/Tiger.html");
         animalsDataArrayList.add(ad6);
 
-        recyclerView.setAdapter(new AnimalCardAdapter(animalsDataArrayList,getContext()));
+        recyclerView.setAdapter(new AnimalCardAdapter(animalsDataArrayList, view.getContext()));
 
         return view;
     }

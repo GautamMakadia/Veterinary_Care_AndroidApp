@@ -5,19 +5,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -27,7 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.gs.VeterinaryCare.DataResource.User;
@@ -40,15 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
     ShapeableImageView profilePicture;
     TextView signInButton;
+    GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInAccount account;
     boolean isUsrLoggedIn = false;
-   
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -61,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
-        FloatingActionButton fab = binding.fab;
+        profilePicture = binding.roundedUsrProfile;
 
+        ExtendedFloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), Fav_List.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
-            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+            mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
             ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -111,15 +110,20 @@ public class MainActivity extends AppCompatActivity {
 
             case (int) R.id.sign_out_item:
                 Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
+                signOut();
                 return true;
 
             default:    return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    private void signOut() {
+        mGoogleSignInClient.signOut();
+        updateUI(account);
+    }
 
+    @Override
+    public boolean onPrepareOptionsMenu(@NonNull Menu menu) {
         menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
    // @Override // CHECKS FOR LAST SIGNED ACCOUNT
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
@@ -144,13 +148,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUI(GoogleSignInAccount account) {
+
+    protected void updateUI(@Nullable GoogleSignInAccount account) {
         if (account == null) {
+            profilePicture.setVisibility(View.GONE);
             Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUsrLoggedIn = true;
-            profilePicture = findViewById(R.id.rounded_usr_profile);
-
             User usr = new User(
                     account.getDisplayName(),
                     account.getEmail(),

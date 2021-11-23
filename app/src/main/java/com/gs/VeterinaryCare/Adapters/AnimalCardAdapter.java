@@ -8,13 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
 import com.gs.VeterinaryCare.R;
 import com.gs.VeterinaryCare.WebViewActivity.WebViewActivity;
@@ -24,11 +20,13 @@ import java.util.ArrayList;
 
 public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.animalViewHolder> {
 
+    @NonNull
     public ArrayList<AnimalsData> animalsDataArrayList;
+    @NonNull
     public Context context;
 
 
-    public AnimalCardAdapter(ArrayList<AnimalsData> animalsDataArrayList, Context context) {
+    public AnimalCardAdapter(@NonNull ArrayList<AnimalsData> animalsDataArrayList, @NonNull Context context) {
         this.animalsDataArrayList = animalsDataArrayList;
         this.context = context;
     }
@@ -43,7 +41,7 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
 
     @Override
     public void onBindViewHolder(@NonNull animalViewHolder holder, int position) {
-        final AnimalsData atCardPosition = animalsDataArrayList.get(position);
+        final AnimalsData cardPosition = animalsDataArrayList.get(position);
 
         holder.animalImage.setImageResource(animalsDataArrayList.get(position).getImageOfAnimal());
         holder.animalName.setText(animalsDataArrayList.get(position).getAnimalName());
@@ -52,7 +50,10 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
             Toast.makeText(view.getContext(), "Loading URL...",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, WebViewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("PageURL",atCardPosition.getAnimalPageURL());
+
+            intent.putExtra("PageURL",cardPosition.getAnimalPageURL());
+            intent.putExtra("AnimalName",cardPosition.getAnimalName());
+
             context.startActivity(intent);
         });
     }
@@ -63,13 +64,13 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
     }
 
     //Animal View Holder Class
-    //Declaring Variables To Assign The itemViews of info_card.xml
+    //Declaring Variables To Assign The itemViews of card_view.xml
     //And Provided To The Recycler View Adapter To Put The Content Into It That Variables
     public static class animalViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView animalImage;
-        public TextView animalName;
-        public CardView parentLayout;
+        ImageView animalImage;
+        TextView animalName;
+        CardView parentLayout;
 
 
         public animalViewHolder(@NonNull View itemView) {

@@ -24,10 +24,9 @@
                 android:id="@+id/rounded_usr_profile"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:visibility="gone"
                 android:layout_gravity="end"
                 android:src="@drawable/ic_baseline_account_circle_24"
-                />
+                android:theme="@style/roundedImageView"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -35,7 +34,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            tools:ignore="SpeakableTextPresentCheck"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,16 +43,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        tools:ignore="SpeakableTextPresentCheck"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:contentDescription="@string/todo" />
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/FavButton"
+        android:text="@string/favourites"
+        app:icon="@drawable/baseline_favorite_border_24"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
