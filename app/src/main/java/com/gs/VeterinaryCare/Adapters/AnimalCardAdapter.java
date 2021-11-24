@@ -20,27 +20,26 @@ import java.util.ArrayList;
 
 public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.animalViewHolder> {
 
-    @NonNull
+
     public ArrayList<AnimalsData> animalsDataArrayList;
-    @NonNull
     public Context context;
 
 
-    public AnimalCardAdapter(@NonNull ArrayList<AnimalsData> animalsDataArrayList, @NonNull Context context) {
+    public AnimalCardAdapter( ArrayList<AnimalsData> animalsDataArrayList,  Context context) {
         this.animalsDataArrayList = animalsDataArrayList;
         this.context = context;
     }
 
 
-    @NonNull
+
     @Override
-    public animalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public animalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View animalCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
         return new animalViewHolder(animalCardView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull animalViewHolder holder, int position) {
+    public void onBindViewHolder(animalViewHolder holder, int position) {
         final AnimalsData cardPosition = animalsDataArrayList.get(position);
 
         holder.animalImage.setImageResource(animalsDataArrayList.get(position).getImageOfAnimal());

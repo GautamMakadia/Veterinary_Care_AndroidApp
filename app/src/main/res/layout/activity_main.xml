@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/appbar_menu"
-            app:title="@string/app_name">
+            app:title="@string/app_name"
+            >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/rounded_usr_profile"
@@ -26,7 +27,8 @@
                 android:layout_height="35dp"
                 android:layout_gravity="end"
                 android:src="@drawable/ic_baseline_account_circle_24"
-                android:theme="@style/roundedImageView"/>
+                tools:ignore="ImageContrastCheck"
+                android:theme="@style/RoundedImageView"/>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -50,10 +52,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="30dp"
         android:contentDescription="@string/FavButton"
         android:text="@string/favourites"
         app:icon="@drawable/baseline_favorite_border_24"
-        tools:ignore="TextContrastCheck" />
+        style="?attr/floatingActionButtonLargeStyle" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

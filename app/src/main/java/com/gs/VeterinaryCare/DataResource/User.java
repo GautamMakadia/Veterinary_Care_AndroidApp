@@ -2,14 +2,13 @@ package com.gs.VeterinaryCare.DataResource;
 
 import android.net.Uri;
 
-
 public class User {
-    String UsrName;
-    String UsrEmail;
-    String UsrID;
-    Uri UsrImage;
+    private String UsrName;
+    private String UsrEmail;
+    private String UsrID;
+    private Uri UsrImage;
 
-     public User(String usrName, String usrEmail, String usrID, Uri usrImage) {
+    public User(String usrName, String usrEmail, String usrID, Uri usrImage) {
         this.UsrName = usrName;
         this.UsrEmail = usrEmail;
         this.UsrID = usrID;
@@ -20,15 +19,25 @@ public class User {
         return UsrName;
     }
 
+
     public String getUsrEmail() {
         return UsrEmail;
     }
+
 
     public String getUsrID() {
         return UsrID;
     }
 
+
     public Uri getUsrImage() {
         return UsrImage;
+    }
+
+    public void signOutUsr(User usr){
+         usr.UsrEmail = null;
+         usr.UsrID = null;
+         usr.UsrImage = null;
+         usr.UsrName = null;
     }
 }

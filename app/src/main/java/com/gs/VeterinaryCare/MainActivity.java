@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
@@ -36,9 +35,11 @@ import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     ShapeableImageView profilePicture;
-    TextView signInButton;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInAccount account;
+    User usr;
+    Intent signInIntent;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     boolean isUsrLoggedIn = false;
 
 
@@ -48,18 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
+        MaterialToolbar materialToolbar = binding.topAppToolBar;
+        setSupportActionBar(materialToolbar);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        Toolbar mToolbar = binding.topAppToolBar;
-        setSupportActionBar(mToolbar);
+
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
         profilePicture = binding.roundedUsrProfile;
+
+        setContentView(binding.getRoot());
 
         ExtendedFloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> {
@@ -68,41 +71,40 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        
-
         //Sign In With Google.
         {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                 handleSignInResult(task);
             });
-
-            //On Click Sign In Button
-            //Launch Google Account Lists
-            signInButton = findViewById(R.id.sign_in_item);
-            signInButton.setOnClickListener(view -> {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                activityResultLauncher.launch(signInIntent);
-            });
-
         }
     }
+
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
+
+            case (int)R.id.sign_in_item:
+                signInIntent = mGoogleSignInClient.getSignInIntent();
+                activityResultLauncher.launch(signInIntent);
+                return true;
 
             case (int)R.id.settings:
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
@@ -118,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
-        mGoogleSignInClient.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> usr.signOutUsr(usr));
+        isUsrLoggedIn = false;
         updateUI(account);
     }
 
@@ -132,11 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Following Code For Google SignIn.
    // @Override // CHECKS FOR LAST SIGNED ACCOUNT
-    protected void onStart() {
-        super.onStart();
-        account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
-    }
+
 
     //HANDLE THE SIGN_IN PROCESS
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
@@ -148,23 +147,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     protected void updateUI(@Nullable GoogleSignInAccount account) {
         if (account == null) {
+            isUsrLoggedIn = false;
             profilePicture.setVisibility(View.GONE);
             Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUsrLoggedIn = true;
-            User usr = new User(
+             usr = new User(
                     account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
                     account.getPhotoUrl());
-
             Glide.with(this).load(usr.getUsrImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "LoggedIn SuccessFully", Toast.LENGTH_SHORT).show();
         }
-
         invalidateOptionsMenu();
     }
 

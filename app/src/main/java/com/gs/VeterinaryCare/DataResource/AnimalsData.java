@@ -1,5 +1,7 @@
 package com.gs.VeterinaryCare.DataResource;
 
+import androidx.annotation.NonNull;
+
 public class AnimalsData {
     private int ImageOfAnimal;
     private String AnimalName;
@@ -7,7 +9,7 @@ public class AnimalsData {
 
 
 
-    public AnimalsData(int imageOfAnimal, String animalName, String animalPageURL) {
+    public AnimalsData(int imageOfAnimal, @NonNull String animalName, @NonNull String animalPageURL) {
         this.ImageOfAnimal = imageOfAnimal;
         this.AnimalName = animalName;
         this.AnimalPageURL = animalPageURL;
@@ -29,10 +31,12 @@ public class AnimalsData {
         return ImageOfAnimal;
     }
 
+    @NonNull
     public String getAnimalName() {
         return AnimalName;
     }
 
+    @NonNull
     public String getAnimalPageURL(){
         return AnimalPageURL;
     }
