@@ -9,10 +9,12 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -22,13 +24,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
-import com.gs.VeterinaryCare.ui.main.Fav_List;
 import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 
 
@@ -39,20 +41,24 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInAccount account;
     User usr;
     Intent signInIntent;
+    RecyclerView recyclerView;
     ActivityResultLauncher<Intent> activityResultLauncher;
     boolean isUsrLoggedIn = false;
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        AppBarLayout appBarLayout = binding.appBarLayout;
         MaterialToolbar materialToolbar = binding.topAppToolBar;
         setSupportActionBar(materialToolbar);
-
+        recyclerView = findViewById(R.id.animalRecyclerView);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -63,13 +69,6 @@ public class MainActivity extends AppCompatActivity {
         profilePicture = binding.roundedUsrProfile;
 
         setContentView(binding.getRoot());
-
-        ExtendedFloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), Fav_List.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        });
 
         //Sign In With Google.
         {
@@ -82,6 +81,31 @@ public class MainActivity extends AppCompatActivity {
                 handleSignInResult(task);
             });
         }
+
+        ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+            // Apply the insets as padding to the view. Here we're setting all of the
+            // dimensions, but apply as appropriate to your layout. You could also
+            // update the views margin if more appropriate.
+            appBarLayout.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+
+            // Return CONSUMED if we don't want the window insets to keep being passed
+            // down to descendant views.
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(viewPager, (v, windowInsets) ->{
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
+            // Apply the insets as padding to the view. Here we're setting all of the
+            // dimensions, but apply as appropriate to your layout. You could also
+            // update the views margin if more appropriate.
+            viewPager.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+
+            // Return CONSUMED if we don't want the window insets to keep being passed
+            // down to descendant views.
+            return WindowInsetsCompat.CONSUMED;
+        });
+
     }
 
     protected void onStart() {
@@ -92,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
 
@@ -126,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(@NonNull Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -147,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void updateUI(@Nullable GoogleSignInAccount account) {
+    protected void updateUI(GoogleSignInAccount account) {
         if (account == null) {
             isUsrLoggedIn = false;
             profilePicture.setVisibility(View.GONE);

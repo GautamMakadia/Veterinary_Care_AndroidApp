@@ -32,6 +32,7 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
 
 
 
+    @NonNull
     @Override
     public animalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View animalCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
@@ -55,6 +56,7 @@ public class AnimalCardAdapter extends RecyclerView.Adapter<AnimalCardAdapter.an
 
             context.startActivity(intent);
         });
+
     }
 
     @Override
