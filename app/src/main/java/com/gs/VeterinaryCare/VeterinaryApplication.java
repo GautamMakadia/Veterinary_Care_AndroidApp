@@ -9,5 +9,6 @@ public class VeterinaryApplication extends Application {
     public void onCreate() {
         DynamicColors.applyToActivitiesIfAvailable(this);
         super.onCreate();
+
     }
 }
