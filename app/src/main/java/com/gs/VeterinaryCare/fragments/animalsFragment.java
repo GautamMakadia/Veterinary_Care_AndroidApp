@@ -23,6 +23,7 @@ public class animalsFragment extends Fragment {
 
     RecyclerView recyclerView;
     AnimalCardAdapter animalCardAdapter;
+    Query query = FirebaseDatabase.getInstance().getReference().child("Animals").orderByChild("type").equalTo(1);
 
     @Override
     public  View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class animalsFragment extends Fragment {
 
         FirebaseRecyclerOptions<AnimalsData> options =
                 new FirebaseRecyclerOptions.Builder<AnimalsData>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Animals").orderByChild("type").equalTo(1), AnimalsData.class)
+                        .setQuery(query, AnimalsData.class)
                         .build();
 
         animalCardAdapter = new AnimalCardAdapter(options);
