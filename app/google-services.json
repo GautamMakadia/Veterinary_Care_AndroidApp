@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "657778668568",
+    "firebase_url": "https://veterinarycare-eb421-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "veterinarycare-eb421",
+    "storage_bucket": "veterinarycare-eb421.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657778668568:android:5cad984fe891c231ebbf6d",
+        "android_client_info": {
+          "package_name": "com.gs.VeterinaryCare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657778668568-po73dadt0hemkp2c6cokhl7p1ubeooad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gs.VeterinaryCare",
+            "certificate_hash": "58e5e983cf0d49aba3e708bf2e84356110390c25"
+          }
+        },
+        {
+          "client_id": "657778668568-953ljcetfje5uhihej6iqs7s8khmc7c6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnkb509nR_m2jFbX3LgEbkJK0saTGdoHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657778668568-953ljcetfje5uhihej6iqs7s8khmc7c6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

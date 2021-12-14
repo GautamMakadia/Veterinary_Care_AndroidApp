@@ -1,43 +1,52 @@
 package com.gs.VeterinaryCare.DataResource;
 
-import androidx.annotation.NonNull;
 
 public class AnimalsData {
-    private int ImageOfAnimal;
-    private String AnimalName;
-    private String AnimalPageURL;
+    private String animalName;
+    private String imageURL;
+    private String pageURL;
+    private int type;
 
+    public AnimalsData(){
 
-
-    public AnimalsData(int imageOfAnimal, @NonNull String animalName, @NonNull String animalPageURL) {
-        this.ImageOfAnimal = imageOfAnimal;
-        this.AnimalName = animalName;
-        this.AnimalPageURL = animalPageURL;
     }
 
-/*    public void setImageOfAnimal(int imageOfAnimal) {
-        ImageOfAnimal = imageOfAnimal;
+    public AnimalsData(String animalName, String imageURL, String pageURL, int type) {
+        this.animalName = animalName;
+        this.imageURL = imageURL;
+        this.pageURL = pageURL;
+        this.type = type;
+    }
+
+    public String getAnimalName() {
+        return animalName;
     }
 
     public void setAnimalName(String animalName) {
-        AnimalName = animalName;
+        this.animalName = animalName;
     }
 
-    public void setAnimalPageURL(String animalPageURL) {
-        AnimalPageURL = animalPageURL;
-    }*/
-
-    public int getImageOfAnimal() {
-        return ImageOfAnimal;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    @NonNull
-    public String getAnimalName() {
-        return AnimalName;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    @NonNull
-    public String getAnimalPageURL(){
-        return AnimalPageURL;
+    public String getPageURL() {
+        return pageURL;
+    }
+
+    public void setPageURL(String pageURL) {
+        this.pageURL = pageURL;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

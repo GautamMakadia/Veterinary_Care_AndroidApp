@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gs.VeterinaryCare.Adapters.AnimalCardAdapter;
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
 import com.gs.VeterinaryCare.R;
@@ -18,8 +20,9 @@ import com.gs.VeterinaryCare.R;
 import java.util.ArrayList;
 
 public class birdsFragment extends Fragment {
-    ArrayList<AnimalsData> birdsDataArrayList;
+
     RecyclerView recyclerView;
+    AnimalCardAdapter animalCardAdapter;
 
     @Nullable
     @Override
@@ -30,13 +33,15 @@ public class birdsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.birds_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        birdsDataArrayList = new ArrayList<>();
+        FirebaseRecyclerOptions<AnimalsData> options =
+                new FirebaseRecyclerOptions.Builder<AnimalsData>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Animals").orderByChild("type").equalTo(3),AnimalsData.class)
+                        .build();
 
-        AnimalsData ad1 = new AnimalsData(R.drawable.tiger,"Tiger","https://veterinarycare-eb421.web.app/Animals_Catagory/Animals/Tiger.html");
-        birdsDataArrayList.add(ad1);
-
-        recyclerView.setAdapter(new AnimalCardAdapter(birdsDataArrayList, view.getContext()));
-
+        animalCardAdapter = new AnimalCardAdapter(options);
+        recyclerView.setAdapter(animalCardAdapter);
+        animalCardAdapter.startListening();
         return view;
     }
+
 }
