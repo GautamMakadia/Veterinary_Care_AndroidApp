@@ -14,17 +14,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:ignore="AllowBackup"
-        android:theme="@style/Theme.VeterinaryCare">
+        android:theme="@style/Theme.VeterinaryCare"
+        >
         <activity
             android:name=".ui.main.Fav_List"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="nosensor"
+            />
         <activity
             android:name=".WebViewActivity.WebViewActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="nosensor"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="nosensor"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,7 +15,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -26,11 +26,12 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.color.DynamicColors;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
+import com.gs.VeterinaryCare.ui.main.Fav_List;
 import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInAccount account;
     User usr;
     Intent signInIntent;
-    RecyclerView recyclerView;
     ActivityResultLauncher<Intent> activityResultLauncher;
     boolean isUsrLoggedIn = false;
 
@@ -50,21 +50,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
-
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         AppBarLayout appBarLayout = binding.appBarLayout;
         MaterialToolbar materialToolbar = binding.topAppToolBar;
         setSupportActionBar(materialToolbar);
-        recyclerView = findViewById(R.id.animalRecyclerView);
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+
+        ExtendedFloatingActionButton fab = binding.fab;
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, Fav_List.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        });
 
         profilePicture = binding.roundedUsrProfile;
 
@@ -82,29 +88,48 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
-            // Apply the insets as padding to the view. Here we're setting all of the
-            // dimensions, but apply as appropriate to your layout. You could also
-            // update the views margin if more appropriate.
-            appBarLayout.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+        //Fixing Positioning Of Views
+        {
+            ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+                // Apply the insets as padding to the view. Here we're setting all of the
+                // dimensions, but apply as appropriate to your layout. You could also
+                // update the views margin if more appropriate.
+                appBarLayout.setPadding(insets.left, insets.top, insets.right, insets.bottom);
 
-            // Return CONSUMED if we don't want the window insets to keep being passed
-            // down to descendant views.
-            return WindowInsetsCompat.CONSUMED;
-        });
+                // Return CONSUMED if we don't want the window insets to keep being passed
+                // down to descendant views.
+                return WindowInsetsCompat.CONSUMED;
+            });
 
-        ViewCompat.setOnApplyWindowInsetsListener(viewPager, (v, windowInsets) ->{
-            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
-            // Apply the insets as padding to the view. Here we're setting all of the
-            // dimensions, but apply as appropriate to your layout. You could also
-            // update the views margin if more appropriate.
-            viewPager.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            ViewCompat.setOnApplyWindowInsetsListener(viewPager, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
+                // Apply the insets as padding to the view. Here we're setting all of the
+                // dimensions, but apply as appropriate to your layout. You could also
+                // update the views margin if more appropriate.
+                viewPager.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+                // Return CONSUMED if we don't want the window insets to keep being passed
+                // down to descendant views.
+                return WindowInsetsCompat.CONSUMED;
+            });
 
-            // Return CONSUMED if we don't want the window insets to keep being passed
-            // down to descendant views.
-            return WindowInsetsCompat.CONSUMED;
-        });
+            ViewCompat.setOnApplyWindowInsetsListener(fab, (v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
+                // Apply the insets as a margin to the view. Here the system is setting
+                // only the bottom, left, and right dimensions, but apply whichever insets are
+                // appropriate to your layout. You can also update the view padding
+                // if that's more appropriate.
+                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                mlp.leftMargin = insets.left;
+                mlp.bottomMargin = insets.bottom + 40;
+                mlp.rightMargin = insets.right + 40;
+                v.setLayoutParams(mlp);
+
+                // Return CONSUMED if you don't want want the window insets to keep being
+                // passed down to descendant views.
+                return WindowInsetsCompat.CONSUMED;
+            });
+        }
 
     }
 

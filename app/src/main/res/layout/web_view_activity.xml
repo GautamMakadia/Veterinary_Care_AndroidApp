@@ -18,24 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/app_name"
+        style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
         app:navigationIcon="@drawable/round_clear_24"
         >
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/rounded_usr_profile"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="@dimen/appbar_padding"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/baseline_favorite_border_24"
-            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
