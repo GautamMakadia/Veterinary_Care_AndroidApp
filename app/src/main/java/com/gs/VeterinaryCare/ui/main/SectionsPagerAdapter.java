@@ -2,14 +2,15 @@ package com.gs.VeterinaryCare.ui.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.gs.VeterinaryCare.R;
-import com.gs.VeterinaryCare.fragments.animalsFragment;
-import com.gs.VeterinaryCare.fragments.birdsFragment;
-import com.gs.VeterinaryCare.fragments.petsFragment;
+import com.gs.VeterinaryCare.fragments.AnimalFragment;
+import com.gs.VeterinaryCare.fragments.BirdFragment;
+import com.gs.VeterinaryCare.fragments.PetFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -25,6 +26,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
@@ -32,15 +34,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fr = null;
         switch (position){
             case 0 :
-                fr = new animalsFragment();
+                fr = new AnimalFragment();
                 break;
 
             case 1 :
-                fr = new petsFragment();
+                fr = new PetFragment();
                 break;
 
             case 2 :
-                fr = new birdsFragment();
+                fr = new BirdFragment();
                 break;
         }
 

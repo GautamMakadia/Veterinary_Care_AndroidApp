@@ -12,8 +12,7 @@ public class VeterinaryApplication extends Application {
         super.onCreate();
         DynamicColors.applyToActivitiesIfAvailable(this);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-        DatabaseReference AnimalRef = FirebaseDatabase.getInstance().getReference("Animals");
+        DatabaseReference AnimalRef = FirebaseDatabase.getInstance().getReference().child("Animals");
         AnimalRef.keepSynced(true);
     }
 }
