@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,22 +29,21 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
 import com.gs.VeterinaryCare.ui.main.Fav_List;
-import com.gs.VeterinaryCare.ui.main.SectionsPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ShapeableImageView profilePicture;
-    GoogleSignInClient mGoogleSignInClient;
-    GoogleSignInAccount account;
+    private ShapeableImageView profilePicture;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount account;
     User usr;
-    Intent signInIntent;
-    ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
     boolean isUsrLoggedIn = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,41 +105,29 @@ public class MainActivity extends AppCompatActivity {
         {
             ViewCompat.setOnApplyWindowInsetsListener(appBarLayout, (v, windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
-                // Apply the insets as padding to the view. Here we're setting all of the
-                // dimensions, but apply as appropriate to your layout. You could also
-                // update the views margin if more appropriate.
+
                 appBarLayout.setPadding(insets.left, insets.top, insets.right, insets.bottom);
 
-                // Return CONSUMED if we don't want the window insets to keep being passed
-                // down to descendant views.
                 return WindowInsetsCompat.CONSUMED;
             });
 
             ViewCompat.setOnApplyWindowInsetsListener(viewPager, (v, windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
-                // Apply the insets as padding to the view. Here we're setting all of the
-                // dimensions, but apply as appropriate to your layout. You could also
-                // update the views margin if more appropriate.
+
                 viewPager.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-                // Return CONSUMED if we don't want the window insets to keep being passed
-                // down to descendant views.
+
                 return WindowInsetsCompat.CONSUMED;
             });
 
             ViewCompat.setOnApplyWindowInsetsListener(fab, (v, windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
-                // Apply the insets as a margin to the view. Here the system is setting
-                // only the bottom, left, and right dimensions, but apply whichever insets are
-                // appropriate to your layout. You can also update the view padding
-                // if that's more appropriate.
+
                 ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
                 mlp.leftMargin = insets.left;
                 mlp.bottomMargin = insets.bottom + 40;
                 mlp.rightMargin = insets.right + 40;
                 v.setLayoutParams(mlp);
 
-                // Return CONSUMED if you don't want want the window insets to keep being
-                // passed down to descendant views.
                 return WindowInsetsCompat.CONSUMED;
             });
         }
@@ -149,10 +136,9 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,8 +151,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case (int)R.id.sign_in_item:
-                signInIntent = mGoogleSignInClient.getSignInIntent();
-                activityResultLauncher.launch(signInIntent);
+                activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
                 return true;
 
             case (int)R.id.settings:
@@ -182,42 +167,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void signOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> usr.signOutUsr(usr));
-        isUsrLoggedIn = false;
-        updateUI(account);
-    }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
-
-
-    //Following Code For Google SignIn.
-   // @Override // CHECKS FOR LAST SIGNED ACCOUNT
-
-
-    //HANDLE THE SIGN_IN PROCESS
+    // CHECKS FOR LAST SIGNED ACCOUNT
+    // HANDLE THE SIGN_IN PROCESS
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
-            GoogleSignInAccount account = task.getResult(ApiException.class);
+            account = task.getResult(ApiException.class);
             updateUI(account);
         }catch (ApiException e){
             updateUI(null);
         }
     }
 
+    //Updates The UI Based On Whether User Is LoggedIn Or Not.
     protected void updateUI(GoogleSignInAccount account) {
         if (account == null) {
             isUsrLoggedIn = false;
+            usr = null;
             profilePicture.setVisibility(View.GONE);
             Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUsrLoggedIn = true;
-             usr = new User(
+            usr = new User(
                     account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
@@ -229,4 +205,11 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    // Method To SIgnOut User From App.
+    private void signOut() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(OnCompleteListener->{
+            isUsrLoggedIn = false;
+            updateUI(account);
+        });
+    }
 }

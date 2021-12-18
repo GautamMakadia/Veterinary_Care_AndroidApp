@@ -34,10 +34,4 @@ public class User {
         return UsrImage;
     }
 
-    public void signOutUsr(User usr){
-         usr.UsrEmail = null;
-         usr.UsrID = null;
-         usr.UsrImage = null;
-         usr.UsrName = null;
-    }
 }
