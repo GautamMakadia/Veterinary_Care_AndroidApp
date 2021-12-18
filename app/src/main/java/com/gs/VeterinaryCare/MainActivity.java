@@ -58,12 +58,26 @@ public class MainActivity extends AppCompatActivity {
         MaterialToolbar materialToolbar = binding.topAppToolBar;
         setSupportActionBar(materialToolbar);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(sectionsPagerAdapter);
+        ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager(), getLifecycle());
+        ViewPager2 viewPager = binding.viewPager;
+        viewPager.setAdapter(viewpagerAdapter);
 
         TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
+        new TabLayoutMediator(tabs, viewPager,(tab, position) -> {
+            switch (position){
+                case 0 :
+                    tab.setText("Animals");
+                    break;
+
+                case 1 :
+                    tab.setText("Pets");
+                    break;
+
+                case 2 :
+                    tab.setText("Birds");
+                    break;
+            }
+        }).attach();
 
         ExtendedFloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> {
