@@ -212,8 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Method To SignOut User From App.
     private void signOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(OnCompleteListener->{
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task ->{
             isUsrLoggedIn = false;
+            account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
             updateUI(account);
         });
     }
