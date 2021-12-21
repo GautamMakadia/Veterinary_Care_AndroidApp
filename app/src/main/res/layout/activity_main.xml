@@ -23,6 +23,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="end"
+                app:srcCompat="@drawable/ic_baseline_account_circle_24"
                 tools:ignore="ImageContrastCheck"
                 android:theme="@style/RoundedImageView"/>
 
