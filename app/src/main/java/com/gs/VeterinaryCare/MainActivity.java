@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         updateUI(account);
     }
 
@@ -151,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case (int)R.id.sign_in_item:
-                activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+                signIn();
+                Toast.makeText(this, "SignIn Initiated.", Toast.LENGTH_SHORT).show();
                 return true;
 
             case (int)R.id.settings:
@@ -159,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case (int) R.id.sign_out_item:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
                 signOut();
+                Toast.makeText(this, "Sign Out Completed", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:    return super.onOptionsItemSelected(item);
@@ -171,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void signIn(){
+        activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
     }
 
     // CHECKS FOR LAST SIGNED ACCOUNT
@@ -205,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-    // Method To SIgnOut User From App.
+    // Method To SignOut User From App.
     private void signOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(OnCompleteListener->{
             isUsrLoggedIn = false;
