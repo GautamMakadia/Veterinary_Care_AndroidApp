@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -47,9 +44,9 @@ public class AnimalCardAdapter extends FirebaseRecyclerAdapter<AnimalsData,Anima
 
     public static class CardViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView animalImage;
-        TextView animalName;
-        CardView animalCardView;
+        ShapeableImageView animalImage;
+        MaterialTextView animalName;
+        MaterialCardView cardView;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
