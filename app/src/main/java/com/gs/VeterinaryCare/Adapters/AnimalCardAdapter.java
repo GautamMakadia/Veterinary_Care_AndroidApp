@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.textview.MaterialTextView;
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
 import com.gs.VeterinaryCare.R;
 import com.gs.VeterinaryCare.WebViewActivity.WebViewActivity;
@@ -23,14 +26,21 @@ public class AnimalCardAdapter extends FirebaseRecyclerAdapter<AnimalsData,Anima
 
     @Override
     protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull AnimalsData model) {
+
+        if (position == getItemCount() - 1) {
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            params.bottomMargin = 140;
+            holder.itemView.setLayoutParams(params);
+        }
+
         holder.animalName.setText(model.getAnimalName());
         Glide.with(holder.animalImage.getContext()).load(model.getImageURL()).into(holder.animalImage);
-        holder.animalCardView.setOnClickListener(view -> {
-            Intent intent = new Intent(holder.animalCardView.getContext(), WebViewActivity.class);
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(holder.cardView.getContext(), WebViewActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("AnimalName",model.getAnimalName());
             intent.putExtra("PageURL",model.getPageURL());
-            holder.animalCardView.getContext().startActivity(intent);
+            holder.cardView.getContext().startActivity(intent);
         });
     }
 
@@ -52,7 +62,7 @@ public class AnimalCardAdapter extends FirebaseRecyclerAdapter<AnimalsData,Anima
             super(itemView);
             animalImage =  itemView.findViewById(R.id.animalImageView);
             animalName =  itemView.findViewById(R.id.animalNameTextView);
-            animalCardView = itemView.findViewById(R.id.cardViewHolder);
+            cardView = itemView.findViewById(R.id.cardViewHolder);
         }
     }
 
