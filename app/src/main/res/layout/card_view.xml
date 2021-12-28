@@ -27,7 +27,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/fab_margin">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/animalNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
