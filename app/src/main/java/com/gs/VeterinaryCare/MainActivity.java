@@ -1,5 +1,7 @@
 package com.gs.VeterinaryCare;
 
+import static com.gs.VeterinaryCare.VeterinaryApplication.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ShapeableImageView profilePicture;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
-    User usr;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    boolean isUsrLoggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.removeItem(isUsrLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
+        menu.removeItem(isUserLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -184,18 +184,18 @@ public class MainActivity extends AppCompatActivity {
     //Updates The UI Based On Whether User Is LoggedIn Or Not.
     protected void updateUI(GoogleSignInAccount account) {
         if (account == null) {
-            isUsrLoggedIn = false;
-            usr = null;
+            isUserLoggedIn = false;
+            user = null;
             profilePicture.setVisibility(View.GONE);
             Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
-            isUsrLoggedIn = true;
-            usr = new User(
+            isUserLoggedIn = true;
+            user = new User(
                     account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
                     account.getPhotoUrl());
-            Glide.with(this).load(usr.getUsrImage()).into(profilePicture);
+            Glide.with(this).load(user.getUsrImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
             Toast.makeText(this, "LoggedIn SuccessFully", Toast.LENGTH_SHORT).show();
         }
