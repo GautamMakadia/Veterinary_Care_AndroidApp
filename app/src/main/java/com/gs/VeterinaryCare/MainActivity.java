@@ -111,15 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 return WindowInsetsCompat.CONSUMED;
             });
 
-            ViewCompat.setOnApplyWindowInsetsListener(viewPager, (v, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
-
-                viewPager.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-
-                return WindowInsetsCompat.CONSUMED;
-            });
-
-            ViewCompat.setOnApplyWindowInsetsListener(fab, (v, windowInsets) -> {
+            ViewCompat.setOnApplyWindowInsetsListener(fab, (v,windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
 
                 ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
