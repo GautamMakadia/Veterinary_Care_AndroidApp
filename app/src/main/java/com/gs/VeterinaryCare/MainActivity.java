@@ -33,6 +33,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
@@ -92,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Sign In With Google.
         {
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
 
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -191,13 +195,22 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUserLoggedIn = true;
-            user = new User(
-                    account.getDisplayName(),
+
+            user = new User(account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
                     account.getPhotoUrl());
-            Glide.with(this).load(user.getUsrImage()).into(profilePicture);
+
+            User userinfo = new User(account.getId(), account.getEmail(), account.getDisplayName());
+
+            Glide.with(this).load(user.getUserImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
+
+            FirebaseDatabase veterinaryCareDB = FirebaseDatabase.getInstance();
+            DatabaseReference userNodeRef = veterinaryCareDB.getReference("Users");
+
+            userNodeRef.child(userinfo.getUserID()).setValue(userinfo);
+
             Toast.makeText(this, "LoggedIn SuccessFully", Toast.LENGTH_SHORT).show();
         }
         invalidateOptionsMenu();
