@@ -11,21 +11,21 @@ public class VeterinaryApplication extends Application {
 
     static User user;
 
-    public static User getUser() {
+    static User getUser() {
         return VeterinaryApplication.user;
     }
 
-    public static void setUser(User user) {
+    static void setUser(User user) {
         VeterinaryApplication.user = user;
     }
 
     static boolean isUserLoggedIn;
 
-    public static boolean isUserLoggedIn() {
+    static boolean isUserLoggedIn() {
         return VeterinaryApplication.isUserLoggedIn;
     }
 
-    public static void setIsUserLoggedIn(boolean isUserLoggedIn) {
+    static void setIsUserLoggedIn(boolean isUserLoggedIn) {
         VeterinaryApplication.isUserLoggedIn = isUserLoggedIn;
     }
 
