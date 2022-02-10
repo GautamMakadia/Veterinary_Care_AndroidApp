@@ -3,48 +3,56 @@ package com.gs.VeterinaryCare.DataResource;
 import android.net.Uri;
 
 public class User {
-    private String usrName;
-    private String usrEmail;
-    private String usrID;
-    private Uri usrImage;
+    private String userName;
+    private String userEmail;
+    private String userID;
+    private Uri userImage;
 
-    public User(String usrName, String usrEmail, String usrID, Uri usrImage) {
-        this.usrName = usrName;
-        this.usrEmail = usrEmail;
-        this.usrID = usrID;
-        this.usrImage = usrImage;
+    public User(){}
+
+    public User(String userName, String userEmail, String userID, Uri userImage) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userID = userID;
+        this.userImage = userImage;
     }
 
-    public void setUsrName(String usrName) {
-        this.usrName = usrName;
+    public User(String userID, String userEmail, String userName) {
+        this.userID = userID;
+        this.userEmail = userEmail;
+        this.userName = userName;
     }
 
-    public void setUsrEmail(String usrEmail) {
-        this.usrEmail = usrEmail;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setUsrID(String usrID) {
-        this.usrID = usrID;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public void setUsrImage(Uri usrImage) {
-        this.usrImage = usrImage;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    public String getUsrName() {
-        return usrName;
+    public void setUserImage(Uri userImage) {
+        this.userImage = userImage;
     }
 
-    public String getUsrEmail() {
-        return usrEmail;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getUsrID() {
-        return usrID;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public Uri getUsrImage() {
-        return usrImage;
+    public String getUserID() {
+        return userID;
+    }
+
+    public Uri getUserImage() {
+        return userImage;
     }
 
 }
