@@ -1,4 +1,4 @@
-package com.gs.VeterinaryCare.ui.main;
+package com.gs.VeterinaryCare.fragments;
 
 import android.os.Bundle;
 
