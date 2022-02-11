@@ -47,7 +47,9 @@
                 app:layout_constraintHorizontal_bias="0.936"
                 app:layout_constraintStart_toEndOf="@+id/animalNameTextView"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/baseline_favorite_border_24" />
+                app:srcCompat="@drawable/outline_favorite_border_24"
+
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

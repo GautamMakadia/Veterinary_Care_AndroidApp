@@ -42,7 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
-import com.gs.VeterinaryCare.ui.main.Fav_List;
+import com.gs.VeterinaryCare.fragments.Fav_List;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                 handleSignInResult(task);
+                this.recreate();
             });
         }
 
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.removeItem(isUserLoggedIn ? R.id.sign_in_item : R.id.sign_out_item);
+        menu.removeItem(isUserLoggedIn() ? R.id.sign_in_item : R.id.sign_out_item);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -196,19 +199,18 @@ public class MainActivity extends AppCompatActivity {
     //Updates The UI Based On Whether User Is LoggedIn Or Not.
     protected void updateUI(GoogleSignInAccount account) {
         if (account == null) {
-            isUserLoggedIn = false;
-            user = null;
+            setIsUserLoggedIn(false);
+            setUser(null);
             profilePicture.setVisibility(View.GONE);
             Toast.makeText(this, "User Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
-            isUserLoggedIn = true;
+            setIsUserLoggedIn(true);
 
-            user = new User(account.getDisplayName(),
+            User user = new User(account.getDisplayName(),
                     account.getEmail(),
                     account.getId(),
-                    account.getPhotoUrl());
-
-            User userinfo = new User(account.getId(), account.getEmail(), account.getDisplayName());
+                    Objects.requireNonNull(account.getPhotoUrl()).toString());
+            setUser(user);
 
             Glide.with(this).load(user.getUserImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
@@ -245,5 +247,6 @@ public class MainActivity extends AppCompatActivity {
             account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
             updateUI(account);
         });
+        this.recreate();
     }
 }
