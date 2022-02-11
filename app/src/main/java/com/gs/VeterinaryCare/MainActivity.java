@@ -1,7 +1,6 @@
 package com.gs.VeterinaryCare;
 
-import static com.gs.VeterinaryCare.VeterinaryApplication.isUserLoggedIn;
-import static com.gs.VeterinaryCare.VeterinaryApplication.user;
+import static com.gs.VeterinaryCare.VeterinaryApplication.*;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -33,8 +33,12 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
@@ -47,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    FirebaseDatabase veterinaryCareDB;
+    private DatabaseReference userNodeRef;
+    Query userNodeQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             isUserLoggedIn = false;
             user = null;
             profilePicture.setVisibility(View.GONE);
-            Toast.makeText(this, "Account Is Not Logged In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             isUserLoggedIn = true;
 
@@ -206,12 +213,28 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this).load(user.getUserImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
 
-            FirebaseDatabase veterinaryCareDB = FirebaseDatabase.getInstance();
-            DatabaseReference userNodeRef = veterinaryCareDB.getReference("Users");
+            veterinaryCareDB = FirebaseDatabase.getInstance();
+            userNodeRef = veterinaryCareDB.getReference("Users");
+            userNodeQuery = userNodeRef;
 
-            userNodeRef.child(userinfo.getUserID()).setValue(userinfo);
+            userNodeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.hasChild(user.getUserID())){
+                        Toast.makeText(MainActivity.this, "User Already Exist!!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        userNodeRef.child(getUser().getUserID()).child("AccountInfo").setValue(getUser());
+                        Toast.makeText(MainActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-            Toast.makeText(this, "LoggedIn SuccessFully", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            Toast.makeText(this, "User Is LoggedIn", Toast.LENGTH_SHORT).show();
         }
         invalidateOptionsMenu();
     }
