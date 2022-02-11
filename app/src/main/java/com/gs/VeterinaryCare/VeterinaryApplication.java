@@ -9,25 +9,25 @@ import com.gs.VeterinaryCare.DataResource.User;
 
 public class VeterinaryApplication extends Application {
 
-    static User user;
+    private static User user;
+    private static boolean isUserLoggedIn;
 
-    static User getUser() {
-        return VeterinaryApplication.user;
-    }
-
-    static void setUser(User user) {
+    public static void setUser(User user) {
         VeterinaryApplication.user = user;
     }
 
-    static boolean isUserLoggedIn;
+    public static void setIsUserLoggedIn(boolean isUserLoggedIn) {
+        VeterinaryApplication.isUserLoggedIn = isUserLoggedIn;
+    }
 
-    static boolean isUserLoggedIn() {
+    public static User getUser() {
+        return VeterinaryApplication.user;
+    }
+
+    public static boolean isUserLoggedIn() {
         return VeterinaryApplication.isUserLoggedIn;
     }
 
-    static void setIsUserLoggedIn(boolean isUserLoggedIn) {
-        VeterinaryApplication.isUserLoggedIn = isUserLoggedIn;
-    }
 
     @Override
     public void onCreate() {

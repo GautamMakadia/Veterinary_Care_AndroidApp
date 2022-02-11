@@ -6,11 +6,11 @@ public class User {
     private String userName;
     private String userEmail;
     private String userID;
-    private Uri userImage;
+    private String userImage;
 
     public User(){}
 
-    public User(String userName, String userEmail, String userID, Uri userImage) {
+    public User(String userName, String userEmail, String userID, String userImage) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userID = userID;
@@ -35,7 +35,7 @@ public class User {
         this.userID = userID;
     }
 
-    public void setUserImage(Uri userImage) {
+    public void setUserImage(String userImage) {
         this.userImage = userImage;
     }
 
@@ -51,7 +51,7 @@ public class User {
         return userID;
     }
 
-    public Uri getUserImage() {
+    public String getUserImage() {
         return userImage;
     }
 
