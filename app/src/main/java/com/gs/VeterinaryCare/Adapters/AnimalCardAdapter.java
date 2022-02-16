@@ -40,8 +40,8 @@ public class AnimalCardAdapter extends FirebaseRecyclerAdapter<AnimalsData,Anima
 
     @Override
     protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull AnimalsData model) {
-        Glide.with(holder.animalImage.getContext()).load(model.getImageURL()).into(holder.animalImage);
         holder.animalName.setText(model.getAnimalName());
+        Glide.with(holder.animalImage.getContext()).load(model.getImageURL()).into(holder.animalImage);
 
         if (position == getItemCount() - 1) {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();

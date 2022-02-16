@@ -25,6 +25,7 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
