@@ -42,7 +42,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
-import com.gs.VeterinaryCare.fragments.Fav_List;
 
 import java.util.Objects;
 
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         ExtendedFloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Fav_List.class);
+            Intent intent = new Intent(this, FavActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
         });

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.VeterinaryCare"
-    tools:context=".fragments.Fav_List"
+    tools:context=".FavActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -15,10 +15,9 @@
         app:navigationIcon="@drawable/round_clear_24"
         app:title="@string/favourites" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favAnimalRecyclerview"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/favViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
