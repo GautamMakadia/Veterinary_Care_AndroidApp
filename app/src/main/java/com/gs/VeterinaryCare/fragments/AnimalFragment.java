@@ -17,7 +17,6 @@ import com.gs.VeterinaryCare.R;
 
 public class AnimalFragment extends Fragment {
     RecyclerView recyclerView;
-    AnimalCardAdapter animalCardAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,7 +24,7 @@ public class AnimalFragment extends Fragment {
                 new FirebaseRecyclerOptions.Builder<AnimalsData>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Animals").orderByChild("type").equalTo(1), AnimalsData.class)
                         .build();
-        animalCardAdapter = new AnimalCardAdapter(options);
+        AnimalCardAdapter animalCardAdapter = new AnimalCardAdapter(options);
         animalCardAdapter.startListening();
 
         View view = inflater.inflate(R.layout.fragment_animal,container,false);
