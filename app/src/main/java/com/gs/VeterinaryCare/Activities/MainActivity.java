@@ -1,4 +1,4 @@
-package com.gs.VeterinaryCare;
+package com.gs.VeterinaryCare.Activities;
 
 import static com.gs.VeterinaryCare.VeterinaryApplication.*;
 
@@ -41,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.gs.VeterinaryCare.Adapters.ViewpagerAdapter;
 import com.gs.VeterinaryCare.DataResource.User;
+import com.gs.VeterinaryCare.R;
 import com.gs.VeterinaryCare.databinding.ActivityMainBinding;
 
 import java.util.Objects;

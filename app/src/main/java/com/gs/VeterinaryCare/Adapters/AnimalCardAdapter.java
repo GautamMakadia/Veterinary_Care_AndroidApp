@@ -25,7 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
 import com.gs.VeterinaryCare.R;
-import com.gs.VeterinaryCare.WebViewActivity.WebViewActivity;
+import com.gs.VeterinaryCare.Activities.WebViewActivity;
 
 public class AnimalCardAdapter extends FirebaseRecyclerAdapter<AnimalsData,AnimalCardAdapter.CardViewHolder> {
 

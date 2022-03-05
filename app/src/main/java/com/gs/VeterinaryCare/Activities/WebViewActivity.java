@@ -1,4 +1,4 @@
-package com.gs.VeterinaryCare.WebViewActivity;
+package com.gs.VeterinaryCare.Activities;
 
 import android.os.Bundle;
 import android.webkit.WebView;

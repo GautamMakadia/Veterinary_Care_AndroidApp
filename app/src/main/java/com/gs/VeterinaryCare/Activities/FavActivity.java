@@ -1,19 +1,13 @@
-package com.gs.VeterinaryCare;
+package com.gs.VeterinaryCare.Activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.database.FirebaseDatabase;
 import com.gs.VeterinaryCare.Adapters.AnimalCardAdapter;
 import com.gs.VeterinaryCare.Adapters.FavPagerAdapter;
-import com.gs.VeterinaryCare.DataResource.AnimalsData;
-import static com.gs.VeterinaryCare.VeterinaryApplication.*;
 
 import com.gs.VeterinaryCare.databinding.ActivityFavBinding;
 public class FavActivity extends AppCompatActivity {
