@@ -202,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
             setIsUserLoggedIn(false);
             setUser(null);
             profilePicture.setVisibility(View.GONE);
-            Toast.makeText(this, "User Is Not Logged In", Toast.LENGTH_SHORT).show();
         } else {
             setIsUserLoggedIn(true);
 
@@ -222,9 +221,7 @@ public class MainActivity extends AppCompatActivity {
             userNodeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.hasChild(user.getUserID())){
-                        Toast.makeText(MainActivity.this, "User Already Exist!!", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if(!snapshot.hasChild(user.getUserID())){
                         userNodeRef.child(getUser().getUserID()).child("AccountInfo").setValue(getUser());
                         Toast.makeText(MainActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
                     }
