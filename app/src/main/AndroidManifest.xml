@@ -15,11 +15,10 @@
         android:supportsRtl="true"
         tools:ignore="AllowBackup"
         android:theme="@style/Theme.VeterinaryCare"
-
         >
         <activity
             android:name=".Activities.FavActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="nosensor"
             />
         <activity
