@@ -94,7 +94,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(this, FavActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.startActivity(intent);
+            if (getUser() == null) {
+                Toast.makeText(this, "Please Login First", Toast.LENGTH_SHORT).show();
+            } else {
+                this.startActivity(intent);
+            }
         });
 
         profilePicture = binding.roundedUsrProfile;
