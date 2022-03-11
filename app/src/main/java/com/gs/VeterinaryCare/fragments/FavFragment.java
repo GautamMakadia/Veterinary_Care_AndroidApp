@@ -17,7 +17,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.gs.VeterinaryCare.Adapters.AnimalCardAdapter;
 import com.gs.VeterinaryCare.DataResource.AnimalsData;
-import com.gs.VeterinaryCare.R;
 import com.gs.VeterinaryCare.databinding.FragmentFavBinding;
 
 public class FavFragment extends Fragment {
