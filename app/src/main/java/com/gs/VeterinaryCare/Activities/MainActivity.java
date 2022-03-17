@@ -99,12 +99,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        profilePicture.setOnClickListener(view -> {
-            Intent userProfileIntent = new Intent(this, WebViewActivity.class);
-            userProfileIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            this.startActivity(userProfileIntent);
-        });
-
         profilePicture = binding.roundedUsrProfile;
 
         setContentView(binding.getRoot());
