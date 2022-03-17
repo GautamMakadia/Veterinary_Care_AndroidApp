@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gs.VeterinaryCare">
+    package="com.gs.VeterinaryCare" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:name=".VeterinaryApplication"
@@ -13,24 +12,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:ignore="AllowBackup"
         android:theme="@style/Theme.VeterinaryCare"
-
-        >
+        tools:ignore="AllowBackup" >
         <activity
             android:name=".Activities.FavActivity"
             android:exported="false"
-            android:screenOrientation="nosensor"
-            />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activities.WebViewActivity"
             android:exported="true"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
-            android:screenOrientation="nosensor"
-            >
+            android:screenOrientation="nosensor" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

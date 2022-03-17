@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    FirebaseDatabase veterinaryCareDB;
     private DatabaseReference userNodeRef;
-    Query userNodeQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 this.startActivity(intent);
             }
+        });
+
+        profilePicture.setOnClickListener(view -> {
+            Intent userProfileIntent = new Intent(this, WebViewActivity.class);
+            userProfileIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(userProfileIntent);
         });
 
         profilePicture = binding.roundedUsrProfile;
@@ -166,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "SignIn Initiated.", Toast.LENGTH_SHORT).show();
                 return true;
 
-            case (int)R.id.settings:
+            case (int)R.id.about:
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
 
@@ -209,18 +213,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setIsUserLoggedIn(true);
 
-            User user = new User(account.getDisplayName(),
-                    account.getEmail(),
-                    account.getId(),
-                    Objects.requireNonNull(account.getPhotoUrl()).toString());
+            User user;
+            if (account.getPhotoUrl() == null) {
+                user = new User(account.getDisplayName(), account.getEmail(), account.getId());
+                Glide.with(this).load(R.drawable.ic_baseline_account_circle_24).into(profilePicture);
+            } else {
+                user = new User(account.getDisplayName(),
+                        account.getEmail(),
+                        account.getId(),
+                        account.getPhotoUrl().toString());
+                Glide.with(this).load(user.getUserImage()).into(profilePicture);
+            }
             setUser(user);
 
-            Glide.with(this).load(user.getUserImage()).into(profilePicture);
             profilePicture.setVisibility(View.VISIBLE);
 
-            veterinaryCareDB = FirebaseDatabase.getInstance();
+            FirebaseDatabase veterinaryCareDB = FirebaseDatabase.getInstance();
             userNodeRef = veterinaryCareDB.getReference("Users");
-            userNodeQuery = userNodeRef;
+            Query userNodeQuery = userNodeRef;
 
             userNodeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
