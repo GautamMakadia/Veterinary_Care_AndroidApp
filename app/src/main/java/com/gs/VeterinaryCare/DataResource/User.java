@@ -1,7 +1,5 @@
 package com.gs.VeterinaryCare.DataResource;
 
-import android.net.Uri;
-
 public class User {
     private String userName;
     private String userEmail;

@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
             User user;
             if (account.getPhotoUrl() == null) {
-                user = new User(account.getDisplayName(), account.getEmail(), account.getId());
+                user = new User(account.getId(),account.getDisplayName(), account.getEmail());
                 Glide.with(this).load(R.drawable.ic_baseline_account_circle_24).into(profilePicture);
             } else {
                 user = new User(account.getDisplayName(),
