@@ -1,7 +1,9 @@
 package com.gs.VeterinaryCare.Activities;
 
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +27,10 @@ public class WebViewActivity extends AppCompatActivity {
         materialToolbar.setTitle(getIntent().getStringExtra("AnimalName"));
 
         webView = binding.webView;
-        webView.loadUrl(getIntent().getStringExtra("PageURL"));
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        String url = getIntent().getStringExtra("PageURL");
+        webView.loadUrl("https://docs.google.com/gview?embedded=true&url="+url);
 
         materialToolbar.setNavigationOnClickListener(view -> finish());
     }
