@@ -20,15 +20,11 @@ public class ViewpagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         Fragment fr = null;
         switch (position){
-            case 0 :
-                fr = new AnimalFragment();
-                break;
-
-            case 1 :
+            case 0:
                 fr = new PetFragment();
                 break;
 
-            case 2 :
+            case 1 :
                 fr = new BirdFragment();
                 break;
         }
@@ -39,6 +35,6 @@ public class ViewpagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

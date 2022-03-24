@@ -74,15 +74,11 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         new TabLayoutMediator(tabs, viewPager,(tab, position) -> {
             switch (position){
-                case 0 :
-                    tab.setText("Animals");
-                    break;
-
-                case 1 :
+                case 0:
                     tab.setText("Pets");
                     break;
 
-                case 2 :
+                case 1 :
                     tab.setText("Birds");
                     break;
             }
